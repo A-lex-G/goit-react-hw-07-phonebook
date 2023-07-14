@@ -41,7 +41,7 @@ export const Form = () => {
         
         dispatch(addContact(contactData));
 
-        Notiflix.Notify.success(`${value} was added to yor contacts`);
+        Notiflix.Notify.success(`${value} was added to your contacts`);
 
         form.reset();
     };
