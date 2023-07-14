@@ -1,13 +1,14 @@
 import css from "./Form.module.css";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
-import { addContact, getContactsArr } from "redux/contactsSlice";
+import { addContact } from '../../redux/operations';
+import { selectContactsArr } from "redux/selectors";
 
 export const Form = () => {
     
     const dispatch = useDispatch();
 
-    const contacts = useSelector(getContactsArr);
+    const {items} = useSelector(selectContactsArr);
 
     const nameInputId = nanoid();
 
@@ -21,16 +22,15 @@ export const Form = () => {
         
         const { value } = form.elements.name;
 
-        if ((contacts.map(contact => contact.name)).includes(value)) {
+        if ((items.map(contact => contact.name)).includes(value)) {
             window.alert(`${value} is already in contacts`)
             return
         };
 
         const contactData = {
             [form.elements.name.name]: value,
-            [form.elements.number.name]: form.elements.number.value,
-            id: nanoid(),
-        }        
+            [form.elements.phone.name]: form.elements.phone.value,
+        }
         
         dispatch(addContact(contactData));
 
@@ -64,7 +64,7 @@ export const Form = () => {
                 </label>
                 <input
                     className={css.form_input}
-                    name="number"
+                    name="phone"
                     id={numberInputId}
                     type="tel"
                     pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"

@@ -17,7 +17,6 @@ const rootReducer = combineReducers({
     contacts: contactsReducer,
 
     filter: filterReducer,
-
 })
 
 const persistConfig = {
@@ -27,7 +26,6 @@ const persistConfig = {
     storage,
 
     whitelist: ['contacts'],
-
 };
 
 const persistedRootReducer = persistReducer(persistConfig, rootReducer);
@@ -51,7 +49,6 @@ export const store = configureStore({
             },
         });
     }
-
 });
 
 export const persistor = persistStore(store);

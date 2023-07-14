@@ -1,12 +1,13 @@
 import { nanoid } from "nanoid";
 import css from "./SearchInput.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { updFilter, getFilterVal } from "redux/filterSlice";
+import { updFilter } from "redux/filterSlice";
+import { selectFilterVal } from "redux/selectors";
 
 export const SearchInput = () => {
     const dispatch = useDispatch();
 
-    const filter = useSelector(getFilterVal);
+    const filter = useSelector(selectFilterVal);
 
     const finderInputId = nanoid();
 

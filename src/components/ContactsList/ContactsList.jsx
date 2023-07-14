@@ -1,47 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import css from "./ContactsList.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { delContact, getContactsArr } from "redux/contactsSlice";
-import { getFilterVal } from "redux/filterSlice";
-
-const getVisibleContacts = (contacts, filter) => {
-    
-    if (contacts.length > 0) {
-
-        switch (true) {
-
-            case filter !== "":
-                return contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()));
-            
-            default:
-                return contacts;
-        }
-    } else {
-
-        return [];
-    }
-}
+import { deleteContact, fetchContacts } from "redux/operations";
+import { selectContactsArr, selectVisibleContacts } from "redux/selectors";
 
 export const ContactsList = () => {
+    
     const dispatch = useDispatch();
 
-    const contacts = useSelector(getContactsArr);
+    const { isLoading, error } = useSelector(selectContactsArr);
 
-    const filter = useSelector(getFilterVal);
-    
-    const visibleContacts = getVisibleContacts(contacts, filter);
+    const visibleContacts = useSelector(selectVisibleContacts);
 
-    const handleDeleteContact = (idValue) => dispatch(delContact(idValue));
+    const handleDeleteContact = (idValue) => dispatch(deleteContact(idValue));
+
+    useEffect(() => {
+        dispatch(fetchContacts());
+    }, [dispatch]);
     
     return (
         <>
             <ul>
+                {isLoading && <p>Loading tasks...</p>}
+                {error && <p>{error}</p>}
                 {visibleContacts.map((contact) => (
                     <li
                         className={css.list_item}
                         key={contact.id}>
                         <p>
-                            {contact.name}: <span>{contact.number}</span>
+                            {contact.name}: <span>{contact.phone}</span>
                         </p>
                         <button
                             className={css.deleteBtn}

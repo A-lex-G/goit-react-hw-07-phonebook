@@ -4,12 +4,19 @@ import { SearchInput } from "./SearchInput/SearchInput";
 
 export const App = () => {
   return (
+
     <>
+      
       <h1>Phonebook</h1>
-      <Form/>
+
+      <Form />
+      
       <h2>Contacts</h2>
-      <SearchInput/>
-      <ContactsList/>
+
+      <SearchInput />
+      
+      <ContactsList />
+      
     </>
   );
 }
