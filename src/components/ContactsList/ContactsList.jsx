@@ -1,8 +1,15 @@
 import React, { useEffect } from "react";
-import css from "./ContactsList.module.css";
+// import css from "./ContactsList.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteContact, fetchContacts } from "redux/operations";
 import { selectContactsArr, selectVisibleContacts } from "redux/selectors";
+import { Loader } from "components/Loader/Loader";
+import {
+    StyledListOfContacts,
+    StyledContactItem,
+    StyledDeleteButton
+} from "./ContactsList.styled";
+import Notiflix from "notiflix";
 
 export const ContactsList = () => {
     
@@ -12,7 +19,10 @@ export const ContactsList = () => {
 
     const visibleContacts = useSelector(selectVisibleContacts);
 
-    const handleDeleteContact = (idValue) => dispatch(deleteContact(idValue));
+    const handleDeleteContact = (contact) => {
+        dispatch(deleteContact(contact.id));
+        Notiflix.Notify.success(`${contact.name} was deleted from your contacts`);
+    }
 
     useEffect(() => {
         dispatch(fetchContacts());
@@ -20,25 +30,34 @@ export const ContactsList = () => {
     
     return (
         <>
-            <ul>
-                {isLoading && <p>Loading tasks...</p>}
-                {error && <p>{error}</p>}
-                {visibleContacts.map((contact) => (
-                    <li
-                        className={css.list_item}
-                        key={contact.id}>
+            {visibleContacts.length > 0 &&
+                <StyledListOfContacts>
+                    {isLoading &&
+                        <Loader />
+                    }
+                    {error &&
                         <p>
-                            {contact.name}: <span>{contact.phone}</span>
+                            {error}
                         </p>
-                        <button
-                            className={css.deleteBtn}
-                            onClick={() => handleDeleteContact(contact.id)}
-                        >
-                            Delete
-                        </button>
-                    </li>
-                ))}
-            </ul>
+                    }
+                    {visibleContacts.map((contact) => (
+                        <StyledContactItem
+                            key={contact.id}>
+                            <p>
+                                {contact.name}:
+                                <span>
+                                    {contact.phone}
+                                </span>
+                            </p>
+                            <StyledDeleteButton
+                                onClick={() => handleDeleteContact(contact)}
+                            >
+                                Delete
+                            </StyledDeleteButton>
+                        </StyledContactItem>
+                    ))}
+                </StyledListOfContacts>
+            }
         </>
     );
 };

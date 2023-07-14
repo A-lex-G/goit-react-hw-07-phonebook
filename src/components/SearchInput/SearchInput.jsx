@@ -1,10 +1,11 @@
 import { nanoid } from "nanoid";
-import css from "./SearchInput.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updFilter } from "redux/filterSlice";
 import { selectFilterVal } from "redux/selectors";
+import { StyledSearchInputLabel, StyledSerchInput } from "./SearchInput.styled";
 
 export const SearchInput = () => {
+    
     const dispatch = useDispatch();
 
     const filter = useSelector(selectFilterVal);
@@ -22,18 +23,17 @@ export const SearchInput = () => {
 
     return (
         <>
-            <label
-                className={css.search_title}
+            <StyledSearchInputLabel
                 htmlFor={finderInputId}>
                 Find contacts by name
-            </label>
-            <input
-                className={css.search_input}
+            </StyledSearchInputLabel>
+            <StyledSerchInput
                 type="text"
                 name="filter"
                 id={finderInputId}
                 value={filter}
                 onChange={handleSetState}
+                placeholder="please enter name to find"
                 required
             />
         </>
