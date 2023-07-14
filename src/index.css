@@ -17,8 +17,19 @@ code {
 h1,
 h2 {
   font-weight: 700;
+  color: tomato
 }
 
-/* div {
-  background-color: tomato;
-} */
+:root {
+  --iris: #4d5ae5;
+  --ocean: #404bbf;
+  --navy-blue: #2e2f42;
+  --slate: #434455;
+  --light-slate: #8e8f99;
+  --cornflower: #e7e9fc;
+  --cloud: #f4f4fd;
+  --white: #ffffff;
+  --green: #31d0aa;
+  --modal-backdrop: #2e2f42;
+  --modal-background: #fcfcfc;
+}

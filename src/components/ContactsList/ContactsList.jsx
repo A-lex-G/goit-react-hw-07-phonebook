@@ -19,9 +19,9 @@ export const ContactsList = () => {
 
     const visibleContacts = useSelector(selectVisibleContacts);
 
-    const handleDeleteContact = (contact) => {
-        dispatch(deleteContact(contact.id));
-        Notiflix.Notify.success(`${contact.name} was deleted from your contacts`);
+    const handleDeleteContact = ({id, name}) => {
+        dispatch(deleteContact(id));
+        Notiflix.Notify.success(`${name} was deleted from your contacts`);
     }
 
     useEffect(() => {
